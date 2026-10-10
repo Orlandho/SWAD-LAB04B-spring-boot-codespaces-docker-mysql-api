@@ -24,6 +24,28 @@ En entornos contemporaneos de ingenieria de software, la portabilidad y la repro
 
 El siguiente diagrama detalla la arquitectura de red y el flujo de peticiones implementado entre el cliente externo, el proxy inverso de GitHub Codespaces, el contenedor Docker de base de datos y la capa de persistencia de Spring Boot:
 
+```mermaid
+graph TD
+    Client["Cliente Externo / Frontend Angular / Thunder Client"]
+    PublicPort["GitHub Codespaces URL Pública :8080 (HTTPS Forwarding)"]
+    Tomcat["Tomcat Embedded Server (Spring Boot 3.4.3)"]
+    Controller["ProductoController (/api/productos)"]
+    Service["ProductoService (Capa de Negocio)"]
+    Repository["ProductoRepository (Spring Data JPA)"]
+    DockerEnv["Docker Engine / Contenedor mysql-lab4"]
+    PrivatePort["Puerto Privado 3306 (TCP Interno)"]
+    MySQLDB[("Base de Datos MySQL 8 (lab4)")]
+
+    Client -->|Petición HTTPS| PublicPort
+    PublicPort -->|Reenvío HTTP :8080| Tomcat
+    Tomcat --> Controller
+    Controller --> Service
+    Service --> Repository
+    Repository -->|Conexión JDBC localhost:3306| PrivatePort
+    PrivatePort --> DockerEnv
+    DockerEnv --> MySQLDB
+```
+
 ![Diagrama de Arquitectura de Despliegue](mermaid%20diagramas/arquitectura.svg)
 
 ---
