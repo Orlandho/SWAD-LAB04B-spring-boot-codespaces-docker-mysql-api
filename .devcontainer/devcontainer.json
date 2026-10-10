@@ -1,0 +1,33 @@
+{
+  "name": "Spring Boot MySQL Codespace (Lab 04B)",
+  "image": "mcr.microsoft.com/devcontainers/java:1-17-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "enableDockerDInDocker": "true"
+    }
+  },
+  "forwardPorts": [8080, 3306],
+  "portsAttributes": {
+    "8080": {
+      "label": "Spring Boot REST API",
+      "onAutoForward": "notify",
+      "visibility": "public"
+    },
+    "3306": {
+      "label": "MySQL 8 Database",
+      "onAutoForward": "ignore",
+      "visibility": "private"
+    }
+  },
+  "postCreateCommand": "chmod +x mvnw && docker run --name mysql-lab4 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=lab4 -p 3306:3306 -d mysql:8",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "rangav.vscode-thunder-client"
+      ]
+    }
+  }
+}
