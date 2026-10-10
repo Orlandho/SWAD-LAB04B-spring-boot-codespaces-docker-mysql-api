@@ -43,11 +43,10 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- In-Memory Database for Hermetic Testing -->
+        <!-- In-Memory Database for Hermetic Testing and Standalone Local Dev -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <!-- Testing Frameworks -->
